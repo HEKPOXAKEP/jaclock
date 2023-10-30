@@ -1,0 +1,58 @@
+@charset "utf-8";
+/*
+  Всякие стили разметки
+*/
+
+#mode-title {
+  padding: 0px 0;
+  color: navy;
+  /*background-color: #edc78a;*/
+  background-color: white;
+  border-top: 2px solid blue;
+  border-bottom: 3px solid blue;
+  text-align: center;
+  /*text-shadow: 1px 1px 2px red, 0 0 1em blue, 0 0 0.2em blue;*/
+  font-size: 18px;
+  font-family: Impact,fantasy;
+}
+
+#info {
+  background-color: white;
+  color: black;
+  padding-left: 10px;
+}
+
+#mainContent {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+#theClock {
+  margin-top: 80px;
+  font-size: 28px;
+  color: white;
+  text-align: center;
+}
+
+#mainFooter {
+  display: flex;
+  position: fixed;
+  padding: 2px 12px;
+  background-color: white;
+  width: 100%;
+  max-width: 1360px;
+  left: 50%;
+  transform: translate(-50%,0%);
+  z-index: 1971;
+  align-items: center;
+  justify-content: center;
+  bottom: 2px;
+  cursor: pointer;
+}
+
+#mainFooter * {
+  color: black;
+  font-weight: bold;
+  margin: 2px;
+}

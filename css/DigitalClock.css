@@ -1,0 +1,113 @@
+@charset "utf-8";
+/*
+  Стили цифровых часов
+*/
+.dc-top-panel-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+#dc-controls {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  width: 90%;
+  font-size: 12px;
+}
+
+.dc-btn {
+  display: inline;
+  color: black;
+  background-color: #e0e0e4;
+  margin: 0 2px;
+  padding: 2px 7px;
+  cursor: pointer;
+  border-left: 1px solid white;
+  border-top: 1px solid white;
+  border-right: 1px solid silver;
+  border-bottom: 1px solid silver;
+  border-radius: 5px 5px 0 0;
+}
+
+.dc-btn:hover {
+  background-color: white;
+}
+
+.dc-lbl {
+  background-color: #e0e0e4;
+  color: black;
+  margin-top: 3px;
+  padding: 2px 7px;
+  border-left: 2px solid white;
+  border-top: 2px solid white;
+  border-right: 2px solid silver;
+  border-radius: 5px 5px 0 0;
+}
+
+#dc-body {
+  background-color: #e0e0e4;
+  padding: 5px 5px 2px 5px;
+  border-radius: 15px;
+}
+
+#dc-face {
+  display: flex;
+  background-color: black;
+  padding: 15px;
+  border: 3px solid silver;
+  border-radius: 15px;
+}
+
+#dc-hh2,#dc-mm2,#dc-ss2 {
+  margin-left: 15px;
+}
+
+.dc-small-digit {
+  width: 32px;
+  height: 64px;
+}
+
+#dc-alarm-flag {
+  width: 15px;
+  height: 15px;
+  margin-left: 15px;
+  border: 1px solid silver;
+  border-radius: 7px;
+  cursor: pointer;
+}
+
+#dc-alarm-flag.alarm-on {
+  border: 1px solid red;
+  border-radius: 7px;
+  background-color: red;
+}
+
+#dc-time-in-words {
+  background-color: #e0e0e4;
+  padding: 3px;
+}
+
+#dc-time-in-words-led {
+  background-color: black;
+  font-family: Arial Narrow,sans-serif;
+/*  font-family: monospace;*/
+  color: lightgreen;
+  font-size: 18px;
+  padding-bottom: 5px;
+}
+
+#dc-pedestal {
+  padding: 2px 0;
+  font-size: 12px;
+  font-weight: bold;
+  text-align: center;
+  color: black;
+  background-color: #e0e0e4;
+  border-radius:  5px;
+}
+
+.dc-3d-rect {
+  border-top: 1px solid white;
+  border-left: 1px solid white;
+  border-right: 1px solid darkgray;
+  border-bottom: 1px solid darkgray;
+}

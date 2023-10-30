@@ -1,0 +1,45 @@
+@charset "utf-8";
+/* Глобальные стили */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font: 12px Helvetica,Arial,sans-serif;
+  width: 100%;
+  background-attachment: fixed;   /* чтобы фон растягивался на всё окно */
+  /*  quotes: "«" "»";*/
+  quotes: '\275D' '\275E';
+}
+
+/* Стиль для текста в кавычках */
+q {
+  font-family: DejaVu Sans Mono, Liberation Mono, Fira Mono, monospace;
+  font-style: italic;
+  font-weight: bold;
+}
+
+q::before {
+  /*font-size: 18px;*/
+  content: open-quote;
+  color: navy;
+}
+
+q::after {
+  /*font-size: 18px;*/
+  content: close-quote;
+  color: navy;
+}
+
+/* Убираем рамки и промежутки для таблиц */
+table {
+  border: 0;
+  border-spacing: 0 0;
+  padding: 0;
+}
+
+td {
+  padding: 0;
+}

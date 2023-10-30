@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name='viewport' content='width=device-width, initial-scale=1'>
+  <link rel="icon" type="image/x-icon" href="img/favicon.ico">
+  <title>Title</title>
+  <!-- jQuery -->
+  <script src='../jq/jquery-3.6.3.min.js'></script>
+  <!--link href='../jq/ui/jquery-ui.css' rel='stylesheet'>
+  <script src='../jq/ui/jquery-ui.min.js'></script-->
+
+  <!-- Модули бибилитеки Ls-www-Lib -->
+  <script src='../ls-www-lib/ls-www-common.js'></script>
+  <script src='../ls-www-lib/mod-control.js'></script>
+
+  <!-- =| Project modules |= -->
+  <link href='css/general.css' rel='stylesheet'>
+  <link href='css/main.css' rel='stylesheet'>
+
+  <script src='js/TimeSpeaker.js'></script>
+  <script src='js/Timer.js'></script>
+  <script src='js/App.js'></script>
+  <script src='js/main.js'></script>
+
+  <!-- старт-ап скрипт -->
+  <script>
+    document.addEventListener('DOMContentLoaded',(ev) => {
+      bootstrap();
+    });
+  </script>
+</head>
+<body>
+  <div id='mainHeader'>
+    <div id='mode-title'></div>
+  </div><div id='info'></div>
+  <div id='mainContent'>
+    <div id='theClock'>
+    </div>
+  </div>
+  <div id='mainFooter'>
+    <div>Copyright 2023 LAGODROM Solutions Ltd.</div>
+  </div>
+</body>
+</html>
