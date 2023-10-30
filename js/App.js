@@ -141,7 +141,7 @@ class App
 
     // время будильника
     this.alarmTime=getCookie('alarm-time');
-    if (!this.alarmTime || (this.alarmTime=='undefined')) {
+    if (!this.alarmTime || (this.alarmTime =='undefined')) {
       this.setAlarmTime('19:17');
     }
 
@@ -186,7 +186,7 @@ class App
     Вернёт Promise. Подробности см. в ls-www-lib/mod-control.js.
   */
   loadClockMod() {
-    $('#mode-title').html(ClockTypes[this.clkType].name);
+    document.getElementById('mode-title').innerHTML=ClockTypes[this.clkType].name;
 
     return modCtrl.loadMod(
       this.clkType,
@@ -281,8 +281,9 @@ class App
   doAnimateRadialBg(i,h,m) {
     var
       mins=(h-TimesOfDay[i].intervals[0].l)*60+m,   // к-во минут от начала интервала
-      perc=Math.trunc((mins*100)/360),              // положение солнца по горизонтали в %
-      perc=perc >100 ? 100 : perc;
+      perc=Math.trunc((mins*100)/360);           // положение солнца по горизонтали в %
+
+    perc=perc >100 ? 100 : perc;
 
     if (this.bgPerc !==perc) {
       this.bgPerc=perc;
