@@ -335,6 +335,7 @@ class App
   }
 
   keyDown(ev) {
+    // ловим только [пробел]
     if (ev.key !=' ') return;
 
     if (!this.alarmSound.paused) this.stopAlarmSound();
