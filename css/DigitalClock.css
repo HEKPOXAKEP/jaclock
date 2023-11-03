@@ -104,10 +104,3 @@
   background-color: #e0e0e4;
   border-radius:  5px;
 }
-
-.dc-3d-rect {
-  border-top: 1px solid white;
-  border-left: 1px solid white;
-  border-right: 1px solid darkgray;
-  border-bottom: 1px solid darkgray;
-}

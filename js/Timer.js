@@ -9,8 +9,9 @@ const
 class Timer {
   #app=null;  // обеъкт App
   curDT;      // current time
-  Visualizer=null;       // объект для визуализации времени
-  secondsIntervalId=-1;  // id таймера
+  Visualizer=null;         // объект для визуализации времени
+  secondsIntervalId=-1;    // id посекундного таймера
+  alarmModeIntervalId=-1;  // id таймера возвращения из режима установки будильника
   prevH=-1;   // | предыдущие
   prevM=-1;   // | чвс и минута
 
@@ -27,9 +28,11 @@ class Timer {
 
     // связываем обработчики таймеров с контекстом this класса
     this.boundOneSecondsTimer=this.oneSecondsTimer.bind(this);
+    this.boundAlarmModeStop=this.alarmModeStop.bind(this);
 
     this.setVisualizer(visualizer);
     this.setTimer(this.#app.clkMode =='cmClock');
+    if (this.#app.clkMode =='cmAlarm') this.resetAlarmTimer();
   }
 
   /*
@@ -43,18 +46,40 @@ class Timer {
   }
 
   /*
-    Настраиваем тамер
+    Устанавливаем таймер
   */
   setTimer(turnOn=true) {
     if (turnOn) {
       // устанавливаем ежесекундный таймер
       this.displayCurrentTime();   // сразу отображаем текущее время
+      if (this.secondsIntervalId !=-1) clearInterval(this.secondsIntervalId);
       this.secondsIntervalId=setInterval(this.boundOneSecondsTimer,1000);
     } else {
       // отключаем таймер
       if (this.secondsIntervalId !=-1) clearInterval(this.secondsIntervalId);
       this.secondsIntervalId=-1;
     }
+  }
+
+  /*
+    Сброс или остановка таймера выхода из режима установки будильника
+  */
+  resetAlarmTimer(stopIt=false) {
+    if (this.alarmModeIntervalId !=-1) {
+      clearInterval(this.alarmModeIntervalId);
+      this.alarmModeIntervalId=-1;
+    }
+    if (stopIt) return;
+    this.alarmModeIntervalId=setInterval(this.boundAlarmModeStop,ONEMINUTE);
+  }
+
+  /*
+    Выход из режима установки будильника по минутному таймеру
+  */
+  alarmModeStop() {
+    clearInterval(this.alarmModeIntervalId);
+    this.alarmModeIntervalId=-1;
+    this.Visualizer.toggleClockMode();
   }
 
   /*

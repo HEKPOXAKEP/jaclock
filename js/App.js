@@ -96,6 +96,35 @@ class App
   constructor() {
     this.initializeGlobals();
     this.loadVersionInfo();
+    this.setClockType();
+    this.setupEvents();
+  }
+
+  /*
+    Настройка событий
+  */
+  setupEvents() {
+    this.boundClockTypeClick=this.clockTypeClick.bind(this);
+    this.boundKeydown=this.keyDown.bind(this);   // для остановки будильника по пробелу
+
+    window.addEventListener('keydown',this.boundKeydown);
+    document.getElementById('clock-type-title').addEventListener('click',this.boundClockTypeClick);
+  }
+
+  /*
+    Переключает тип часов Аналоговые/Цифровыи и загружает соответствующий модуль
+  */
+  setClockType(ct) {
+    if (ct) {
+      if (this.clkType ==ct) return;
+
+      this.clkType=ct;
+      setCookie('clk-type',ct);
+    }
+
+    document.getElementById('clock-type-title').innerHTML=ClockTypes[this.clkType].name;
+
+    if (this.timer) this.timer.setTimer(false);
 
     // загрузка и инициализация модуля XxxClock
     new Promise((resolve,reject) => {
@@ -109,8 +138,15 @@ class App
     })
     .then((response) => {
       ///_log(response.message);  // dbg
+      if (this.clkVisualObj !=null) this.clkVisualObj=null;
       this.clkVisualObj=new ClockTypes[this.clkType]['className']();
-      this.timer=new Timer(this,this.clkVisualObj);
+
+      if (this.timer ==null)
+        this.timer=new Timer(this,this.clkVisualObj);
+      else
+        this.timer.setVisualizer(this.clkVisualObj);
+
+      this.timer.setTimer(this.clkMode =='cmClock');
     })
     .catch((err) => {
       //_err(`Метод App.loadClockMod() завершился с ошибкой:\n${err.message}`);
@@ -157,8 +193,6 @@ class App
     // параметры сигнала будильника
     this.alarmSound.loop=true;
     this.boundPlayAlarmSound=this.playAlarmSound.bind(this);
-    this.boundKeydown=this.keyDown.bind(this);   // для остановки будильника по пробелу
-    window.addEventListener('keydown',this.boundKeydown);
   }
 
   /*
@@ -186,8 +220,6 @@ class App
     Вернёт Promise. Подробности см. в ls-www-lib/mod-control.js.
   */
   loadClockMod() {
-    document.getElementById('mode-title').innerHTML=ClockTypes[this.clkType].name;
-
     return modCtrl.loadMod(
       this.clkType,
       {
@@ -198,7 +230,7 @@ class App
   }
 
   /*
-    Устанавливает режим Часы/Установка будильника
+    Запоминает режим Часы/Установка будильника
   */
   setClockMode(cm) {
     this.clkMode=cm;
@@ -276,7 +308,7 @@ class App
   }
 
   /*
-    Анимация радиального фона.
+    Анимация радиального фона
   */
   doAnimateRadialBg(i,h,m) {
     var
@@ -304,7 +336,7 @@ class App
   }
 
   /*
-    Выключает звук
+    Выключает звук будильника
   */
   stopAlarmSound() {
     this.alarmSound.pause();
@@ -340,6 +372,14 @@ class App
 
     if (!this.alarmSound.paused) this.stopAlarmSound();
     this.clkVisualObj.alarmOnOff();
+  }
+
+  /*
+    Клик по заголовку для смены типа чсов
+  */
+  clockTypeClick(ev) {
+    //this.clkType=(this.clkType =='clkDigital') ? 'clkAnalog' : 'clkDigital';
+    this.setClockType((this.clkType =='clkDigital') ? 'clkAnalog' : 'clkDigital');
   }
 
 } /* the end of the class App */

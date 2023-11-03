@@ -1,21 +1,16 @@
 /*
   =======================================
-  Объект для отображения Цифровых часов
+  Класс для отображения Цифровых часов
   =======================================
 */
 const
   DIGIT_IMG_SRC='img/Digit-0.png';
 
-class DigitalClock {
-  tmpTime={h:0,m:0};  // хранит время будильника в процессе установки
+class DigitalClock extends AClock {
 
   constructor() {
-    //this.tmpTime={h:Number(app.alarmTime.slice(0,2)),m:Number(app.alarmTime.slice(3))};
-    this.tmpTime=strToHMobj(app.alarmTime);
-    this.updateButtons();
-    this.updateAlarmFlag();
-    if (app.clkMode =='cmAlarm') this.updateClockFace();
-    this.setupEvents();
+    super();
+    this.reinit();
   }
 
   /*
@@ -79,15 +74,6 @@ class DigitalClock {
   }
 
   /*
-    Отображение всех компонентов времени
-  */
-  displayTime(h,m,s) {
-    this.displayHours(h);
-    this.displayMinutes(m);
-    this.displaySeconds(s);
-  }
-
-  /*
     Отображает время прописью
   */
   displayTimeInWords(h,m) {
@@ -99,6 +85,7 @@ class DigitalClock {
   */
   alarmButtonsClick(ev) {
     clearSelection();
+    app.timer.resetAlarmTimer();  // сбрасываем таймер выхода из режима установки
 
     switch (ev.target.id.split('-')[1]) {
       case 'hh':
@@ -137,12 +124,15 @@ class DigitalClock {
     app.setClockMode(app.clkMode =='cmClock' ? 'cmAlarm' : 'cmClock');
     app.timer.setTimer(app.clkMode =='cmClock');
 
-    if (app.clkMode =='cmClock')
+    if (app.clkMode =='cmClock') {
       // перешли в режим отображения времени
+      app.timer.resetAlarmTimer(true);
       app.setAlarmTime(this.tmpTime);
-    else
+    } else {
       // перешли в режим установки бдильника
       this.tmpTime=strToHMobj(app.alarmTime);
+      app.timer.resetAlarmTimer();
+    }
 
     this.updateButtons();
     this.updateClockFace();
@@ -159,7 +149,7 @@ class DigitalClock {
       const dt=new Date();
       this.displayHours(dt.getHours());
       this.displayMinutes(dt.getMinutes());
-    } else {
+    } else { // app.clkMode==cmAlarm
       // режим установка будильника
       document.getElementById('dc-hh-mm-colon').setAttribute('src',DIGIT_IMG_SRC.replace('0','colon').replace('png','gif'));
       document.getElementById('dc-mm-ss-colon').setAttribute('src',DIGIT_IMG_SRC.replace('0','none'));
@@ -232,6 +222,6 @@ class DigitalClock {
 }
 
 /*
-  Регистрируем класс визуализаторы для часов.
+  Регистрируем класс визуализатора Цифровых часов.
 */
 registerClockClass('clkDigital',DigitalClock);
