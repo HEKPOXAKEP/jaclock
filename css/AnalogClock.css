@@ -3,45 +3,31 @@
   Стили аналоговых часов
 */
 #ac-body {
+  position: relative;  /* - позиционированный родитель */
   background-color: #e0e0e4;
   padding: 5px;
   border-radius: 15px;
 }
 
 #ac-face {
-  position: relative;
   background-color: #f2f2f2;
   border: 3px solid silver;
   border-radius: 15px;
-  min-width: 500px;
-  min-height: 500px;
+/* установка размеров в css работает неправильно!
+  width: 500px;
+  height: 500px;*/
 }
 
 #ac-hour-hand {
-  background-color: blue;
-  min-width: 32px;
-  max-width: 32px;
-  min-height: 32px;
-  border-radius: 15px;
-/*  z-index: 12;*/
+  z-index: 12;
 }
 
 #ac-minute-hand {
-  background-color: yellow;
-  min-width: 24px;
-  max-width: 24px;
-  min-height: 24px;
-  border-radius: 12px;
-/*  z-index: 13;*/
+  z-index: 13;
 }
 
 #ac-second-hand {
-  background-color: red;
-  min-width: 12px;
-  max-width: 12px;
-  min-height: 12px;
-  border-radius: 6px;
-/*  z-index: 14;*/
+  z-index: 14;
 }
 
 .ac-hand {
