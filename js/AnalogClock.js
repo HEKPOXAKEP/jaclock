@@ -6,7 +6,7 @@
 const
   DEG_1_SM=6,          // градусов на 1 секунду и минуту
   DEG_1_HR=30,         // градусов на 1 час
-  DEG_ZERO=d2r(-90);   // начало отсчёта на 12:00
+  RAD_ZERO=d2r(-90);   // начало отсчёта на 12:00
 
 function d2r(dgrs) {
   return (Math.PI/180)*dgrs;
@@ -73,12 +73,15 @@ class AnalogClock extends AClock {
     drawFaceHours();
     drawFaceHours();
 
+    /*
+      Метки часов 1..12
+    */
     function drawFaceHours() {
       var ang;
 
       ctx.translate(cvs.width/2,cvs.height/2);
 
-      ctx.font=r*0.15+'px arial';
+      ctx.font=r*0.14+'px arial';
       ctx.textBaseline='middle';
       ctx.textAlign='center';
       ctx.fillStyle='navy';
@@ -101,6 +104,9 @@ class AnalogClock extends AClock {
       ctx.setTransform(1,0,0,1,0,0);
     }
 
+    /*
+      Деления по кругу циферблата
+    */
     function drawFaceDashes() {
       var ang,p1,p2;
 
@@ -155,7 +161,7 @@ class AnalogClock extends AClock {
 
     ctx.strokeStyle='blue';
     ctx.lineWidth=2;
-    ctx.arc(ctr.cx,ctr.cy, 32, d2r(-90),d2r(-90+(hours<12?hours:hours-12)*DEG_1_HR));
+    ctx.arc(ctr.cx,ctr.cy, 32, RAD_ZERO,d2r(-90+(hours<12?hours:hours-12)*DEG_1_HR));
     ctx.stroke();
   }
 
@@ -173,7 +179,7 @@ class AnalogClock extends AClock {
 
     ctx.strokeStyle='green';
     ctx.lineWidth=2;
-    ctx.arc(ctr.cx,ctr.cy, 24, d2r(-90),d2r(-90+minutes*DEG_1_SM));
+    ctx.arc(ctr.cx,ctr.cy, 24, RAD_ZERO,d2r(-90+minutes*DEG_1_SM));
     ctx.stroke();
   }
 
@@ -191,7 +197,7 @@ class AnalogClock extends AClock {
 
     ctx.strokeStyle='red';
     ctx.lineWidth=2;
-    ctx.arc(ctr.cx,ctr.cy, 14, d2r(-90),d2r(-90+seconds*DEG_1_SM));
+    ctx.arc(ctr.cx,ctr.cy, 14, RAD_ZERO,d2r(-90+seconds*DEG_1_SM));
     ctx.stroke();
   }
 
@@ -232,7 +238,7 @@ class AnalogClock extends AClock {
     ctx.strokeStyle='black';
     ctx.arc(60,65,5,0,Math.PI*2,true); // Левый глаз
     ctx.moveTo(95, 65);
-    ctx.arc(90, 65, 5, 0, Math.PI*2, true); // Правый глаз
+    ctx.arc(90,65,5,0,Math.PI*2,true); // Правый глаз
     ctx.stroke();
   }
 
