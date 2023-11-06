@@ -33,24 +33,32 @@ function numInIntervals(n,a) {
 }
 
 /*
-  Переводит строку вида 'hh:mm' в объект {h,m}
+  Из строки 'hh:mm' в объект {h,m,s}
 */
 function strToHMobj(str) {
   return {
     h: Number(str.slice(0,2)),
-    m: Number(str.slice(3))
+    m: Number(str.slice(3)),
+    s: 0
   };
 }
 
 /*
-  Вернёт строку времени вида 'hh:mm' из объекта {h,m}
+  Из объекта {h,m,s} в строку 'hh:mm'
 */
 function hmObjToStr(hm) {
   return hm.h.toString().padStart(2,'0')+':'+hm.m.toString().padStart(2,'0');
 }
 
 /*
-  Убирает выделения
+  Из Date() в {h,m,s}
+*/
+function time2HMS(dt) {
+  return {h:dt.getHours(),m:dt.getMinutes(),s:dt.getSeconds()};
+}
+
+/*
+  Убирает все выделения
 */
 function clearSelection() {
   if (window.getSelection) window.getSelection().removeAllRanges();

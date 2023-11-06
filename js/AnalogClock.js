@@ -6,7 +6,7 @@
 const
   DEG_1_SM=6,          // градусов на 1 секунду и минуту
   DEG_1_HR=30,         // градусов на 1 час
-  RAD_ZERO=d2r(-90);   // начало отсчёта на 12:00
+  RAD_ZERO=d2r(-90);   // начало отсчёта 12:00
 
 function d2r(dgrs) {
   return (Math.PI/180)*dgrs;
@@ -20,10 +20,12 @@ class AnalogClock extends AClock {
   }
 
   reinit() {
-    super.reinit();
-    //this.drawFace();
-    //this.drawSmile();
+    const
+      cvs=AnalogClock.getCvs('ac-face');
+    this.radius=cvs.width >cvs.height ? cvs.height/2 : cvs.width/2;
+
     this.paintClockFace();
+    super.reinit();
   }
 
   /*
@@ -54,7 +56,7 @@ class AnalogClock extends AClock {
     else
       cvs=v;
 
-    return {cx:cvs.width/2,cy:cvs.height/2};
+    return {x:cvs.width/2,y:cvs.height/2};
   }
 
   /*
@@ -65,21 +67,20 @@ class AnalogClock extends AClock {
       cvs=AnalogClock.getCvs('ac-face'),
       ctx=AnalogClock.getCtx(cvs),
       ctr=AnalogClock.getCtr(cvs),
-      r=(cvs.width-30)/2;
+      r=this.radius-15;
 
     cvs.width+=0;  // clear canvas
 
     drawFaceDashes();
-    drawFaceHours();
-    drawFaceHours();
+    drawFaceNumbers();
 
     /*
       Метки часов 1..12
     */
-    function drawFaceHours() {
+    function drawFaceNumbers() {
       var ang;
 
-      ctx.translate(cvs.width/2,cvs.height/2);
+      ctx.translate(ctr.x,ctr.y);
 
       ctx.font=r*0.14+'px arial';
       ctx.textBaseline='middle';
@@ -108,9 +109,9 @@ class AnalogClock extends AClock {
       Деления по кругу циферблата
     */
     function drawFaceDashes() {
-      var ang,p1,p2;
+      var ang;
 
-      ctx.translate(cvs.width/2,cvs.height/2);
+      ctx.translate(ctr.x,ctr.y);
 
       ctx.strokeStyle='black';
       ctx.lineWidth=1;
@@ -123,10 +124,6 @@ class AnalogClock extends AClock {
         ctx.rotate(-ang);
 
         if (i%5 ==0) {
-          /*ctx.fillStyle='cyan';
-          ctx.fillRect(-1,-1,4,4);
-          ctx.fillStyle='gray';
-          ctx.strokeRect(-2,-2,5,5);*/
           ctx.fillStyle='red';
           ctx.beginPath();
           ctx.arc(0,0, 3, 0,Math.PI*2);
@@ -148,57 +145,75 @@ class AnalogClock extends AClock {
   /*
     Рисуем часовую стрелку
   */
-  displayHours(hours) {
+  displayHours(hms) {
     const
       cvs=AnalogClock.getCvs('ac-hour-hand'),
-      ctx=AnalogClock.getCtx(cvs),
-      ctr=AnalogClock.getCtr(cvs);
+      ctx=AnalogClock.getCtx(cvs);
 
     /*ctx.clearRect(0,0,cvs.width,cvs.height);
     ctx.beginPath();*/
     ///cvs.width=cvs.width;
     cvs.width+=0;
 
-    ctx.strokeStyle='blue';
-    ctx.lineWidth=2;
-    ctx.arc(ctr.cx,ctr.cy, 32, RAD_ZERO,d2r(-90+(hours<12?hours:hours-12)*DEG_1_HR));
-    ctx.stroke();
+    var
+      hour=((hms.h%12)*Math.PI/6)+
+           (hms.m*Math.PI/(6*60))+
+           (hms.s*Math.PI/(360*60));
+    this.drawHand(cvs,ctx, hour, this.radius*0.5,17,'navy');
   }
 
   /*
     Рисуем минутную стрелку
   */
-  displayMinutes(minutes) {
+  displayMinutes(hms) {
     const
       cvs=AnalogClock.getCvs('ac-minute-hand'),
-      ctx=AnalogClock.getCtx(cvs),
-      ctr=AnalogClock.getCtr(cvs);
+      ctx=AnalogClock.getCtx(cvs);
 
-    // clearRect()
+    // clearRect() - не работает!
     cvs.width+=0;
 
-    ctx.strokeStyle='green';
-    ctx.lineWidth=2;
-    ctx.arc(ctr.cx,ctr.cy, 24, RAD_ZERO,d2r(-90+minutes*DEG_1_SM));
-    ctx.stroke();
+    var minute=(hms.m*Math.PI/30)+(hms.s*Math.PI/(30*60));
+    this.drawHand(cvs,ctx, minute,this.radius*0.75,9,'green');
   }
 
   /*
     Рисуем секундную стрелку
   */
-  displaySeconds(seconds) {
+  displaySeconds(hms) {
     const
       cvs=AnalogClock.getCvs('ac-second-hand'),
-      ctx=AnalogClock.getCtx(cvs),
-      ctr=AnalogClock.getCtr(cvs);
+      ctx=AnalogClock.getCtx(cvs);
 
     // clearRect()
     cvs.width+=0;
 
-    ctx.strokeStyle='red';
-    ctx.lineWidth=2;
-    ctx.arc(ctr.cx,ctr.cy, 14, RAD_ZERO,d2r(-90+seconds*DEG_1_SM));
+    this.drawHand(cvs,ctx,hms.s*Math.PI/30,this.radius-7,1,'red');
+  }
+
+  /*
+    Рисует стрелку по заданным параметрам
+  */
+  drawHand(cvs,ctx,ang,len,wdth,clr) {
+    ctx.translate(cvs.width/2,cvs.height/2);
+
+    ctx.beginPath();
+    ctx.lineWidth=wdth;
+    ctx.strokeStyle=clr;
+    ctx.lineCap='round';
+    ctx.moveTo(0,0);
+    ctx.rotate(ang);
+    ctx.lineTo(0,-len);
     ctx.stroke();
+    ctx.rotate(-ang);
+
+    ctx.setTransform(1,0,0,1,0,0);
+  }
+
+  updateClockFace() {
+    const hms=time2HMS(new Date());
+    this.displayHours(hms);
+    this.displayMinutes(hms);
   }
 
   /* -------------------------------------------------------- */

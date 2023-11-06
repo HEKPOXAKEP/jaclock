@@ -4,7 +4,7 @@
   =========================
 */
 class AClock {
-  tmpTime={h:-1,m:-1};  // хранит время будильника в процессе установки
+  tmpTime={h:-1,m:-1,s:0};  // хранит время будильника в процессе установки
 
   constructor() {
     this.tmpTime=strToHMobj(app.alarmTime);
@@ -32,17 +32,17 @@ class AClock {
   setupEvents() {}
 
   /* Отображение часов */
-  displayHours(hours) {}
+  displayHours(hms) {}
   /* Отображение минут */
-  displayMinutes(minutes) {}
+  displayMinutes(hms) {}
   /* Отображение секунд */
-  displaySeconds(seconds) {}
+  displaySeconds(hms) {}
 
   /* Отображение всех компонентов времени */
-  displayTime(h,m,s) {
-    this.displayHours(h);
-    this.displayMinutes(m);
-    this.displaySeconds(s);
+  displayTime(hms) {
+    this.displayHours(hms.h);
+    this.displayMinutes(hms.m);
+    this.displaySeconds(hms.s);
   }
 
   /* Отображает время будильника */

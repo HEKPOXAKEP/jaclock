@@ -128,7 +128,7 @@ class App
 
     // загрузка и инициализация модуля XxxClock
     new Promise((resolve,reject) => {
-      var rez=this.loadClockMod();
+      var rez=this.loadClockModule();
 
       if (rez.error) {
         reject(rez.message);
@@ -149,8 +149,8 @@ class App
       this.timer.setTimer(this.clkMode =='cmClock');
     })
     .catch((err) => {
-      //_err(`Метод App.loadClockMod() завершился с ошибкой:\n${err.message}`);
-      _err('Метод App.loadClockMod() завершился с ошибкой:\n',err);
+      //_err(`Метод App.loadClockModule() завершился с ошибкой:\n${err.message}`);
+      _err('Метод App.loadClockModule() завершился с ошибкой:\n',err);
     });
   }
 
@@ -219,7 +219,7 @@ class App
     Загружает компонеты модуля Часов для текущего режима App.clkType.
     Вернёт Promise. Подробности см. в ls-www-lib/mod-control.js.
   */
-  loadClockMod() {
+  loadClockModule() {
     return modCtrl.loadMod(
       this.clkType,
       {

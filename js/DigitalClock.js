@@ -36,9 +36,9 @@ class DigitalClock extends AClock {
   /*
     Отображение часов
   */
-  displayHours(hours) {
+  displayHours(hms) {
     const
-      hh=hours.toString(),
+      hh=hms.h.toString(),
       hh1=document.getElementById('dc-hh1'),
       hh2=document.getElementById('dc-hh2');
 
@@ -54,9 +54,9 @@ class DigitalClock extends AClock {
   /*
     Отображение минут
   */
-  displayMinutes(minutes) {
+  displayMinutes(hms) {
     const
-      mm=minutes.toString().padStart(2,'0');
+      mm=hms.m.toString().padStart(2,'0');
 
     document.getElementById('dc-mm1').setAttribute('src',DIGIT_IMG_SRC.replace('0',mm[0]));
     document.getElementById('dc-mm2').setAttribute('src',DIGIT_IMG_SRC.replace('0',mm[1]));
@@ -65,9 +65,9 @@ class DigitalClock extends AClock {
   /*
     Отображение секунд
   */
-  displaySeconds(seconds) {
+  displaySeconds(hms) {
     const
-      ss=seconds.toString().padStart(2,'0');
+      ss=hms.s.toString().padStart(2,'0');
 
     document.getElementById('dc-ss1').setAttribute('src',DIGIT_IMG_SRC.replace('0',ss[0]));
     document.getElementById('dc-ss2').setAttribute('src',DIGIT_IMG_SRC.replace('0',ss[1]));
@@ -146,9 +146,9 @@ class DigitalClock extends AClock {
       // режим время
       document.getElementById('dc-hh-mm-colon').setAttribute('src',DIGIT_IMG_SRC.replace('0','colon'));
       document.getElementById('dc-mm-ss-colon').setAttribute('src',DIGIT_IMG_SRC.replace('0','colon'));
-      const dt=new Date();
-      this.displayHours(dt.getHours());
-      this.displayMinutes(dt.getMinutes());
+      const hms=time2HMS(new Date());
+      this.displayHours(hms);
+      this.displayMinutes(hms);
     } else { // app.clkMode==cmAlarm
       // режим установка будильника
       document.getElementById('dc-hh-mm-colon').setAttribute('src',DIGIT_IMG_SRC.replace('0','colon').replace('png','gif'));
@@ -163,8 +163,8 @@ class DigitalClock extends AClock {
     Отображает время будильника
   */
   displayAlarmTime() {
-    this.displayHours(this.tmpTime.h);
-    this.displayMinutes(this.tmpTime.m);
+    this.displayHours(this.tmpTime);
+    this.displayMinutes(this.tmpTime);
   }
 
   /*
@@ -191,7 +191,6 @@ class DigitalClock extends AClock {
       document.getElementById('dc-mm-lbl').innerHTML='минуты';
     }
   }
-
 
   /*
     Вкл/выкл будильника

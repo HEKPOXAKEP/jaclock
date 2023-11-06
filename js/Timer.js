@@ -7,13 +7,12 @@ const
   ONEMINUTE=1000*60;
 
 class Timer {
-  #app=null;  // обеъкт App
-  curDT;      // current time
-  Visualizer=null;         // объект для визуализации времени
-  secondsIntervalId=-1;    // id посекундного таймера
-  alarmModeIntervalId=-1;  // id таймера возвращения из режима установки будильника
-  prevH=-1;   // | предыдущие
-  prevM=-1;   // | чвс и минута
+  #app=null;                  // обеъкт App
+  curHMS;                     // current time in {h,m,s}
+  Visualizer=null;            // объект для визуализации времени
+  secondsIntervalId=-1;       // id посекундного таймера
+  alarmModeIntervalId=-1;     // id таймера возвращения из режима установки будильника
+  prevHMS={h:-1,m:-1,s:-1};   // предыдущие час, минута и секунда
 
   /*
     Конструктор
@@ -94,45 +93,51 @@ class Timer {
     Отображает секунды
   */
   displayCurrentSeconds() {
-    this.curDT=new Date();
+    const
+      hms=time2HMS(new Date());
+
+    if (hms.s ==this.curHMS.s)
+      return;
+    else
+      this.curHMS=hms;
 
     if (!this.Visualizer) return;
 
-    this.Visualizer.displaySeconds(this.curDT.getSeconds());
+    this.Visualizer.displaySeconds(hms);
 
-    if (this.curDT.getSeconds() ==0) {
-      this.displayCurrentHM();
+    if (hms.s ==0) {
+      this.displayCurrentHM(hms);
       // проверка будильника
-      this.#app.checkAlarmTime(this.curDT.getHours(),this.curDT.getMinutes());
+      this.#app.checkAlarmTime(hms.h,hms.m);
     }
   }
 
   /*
     Отображает часы и минуты
   */
-  displayCurrentHM() {
-    this.curDT=new Date();
-
-    const
-      H=this.curDT.getHours(),
-      M=this.curDT.getMinutes();
+  displayCurrentHM(hms) {
+    if (!hms)
+      this.curHMS=time2HMS(new Date());
+    else
+      this.curHMS=hms;
 
     // корректирует фон
-    this.#app.checkTimeOfDay(H,M);
+    this.#app.checkTimeOfDay(this.curHMS.h,this.curHMS.m);
 
     // время прописью
-    if ((H !=this.prevH) || (M !=this.prevM)) this.Visualizer.displayTimeInWords(H,M);
+    if ((this.curHMS.h !=this.prevHMS.h) || (this.curHMS.m !=this.prevHMS.m))
+      this.Visualizer.displayTimeInWords(this.curHMS.h,this.curHMS.m);
 
-    if (H !==this.prevH) {
-      this.prevH=H;
+    if (this.curHMS.h !==this.prevHMS.h) {
+      this.prevHMS.h=this.curHMS.h;
       if (this.Visualizer)
-        this.Visualizer.displayHours(H);
+        this.Visualizer.displayHours(this.curHMS);
     }
 
-    if (M !==this.prevM) {
-      this.prevM=M;
+    if (this.curHMS.m !==this.prevHMS.m) {
+      this.prevHMS.m=this.curHMS.m;
       if (this.Visualizer)
-        this.Visualizer.displayMinutes(M);
+        this.Visualizer.displayMinutes(this.curHMS);
     }
   }
 
