@@ -2,6 +2,51 @@
 /*
   Стили аналоговых часов
 */
+.ac-top-panel-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+#ac-controls {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  width: 90%;
+  font-size: 12px;
+}
+
+.ac-btn {
+  display: inline;
+  color: black;
+  background-color: #e0e0e4;
+  margin: 0 2px;
+  padding: 2px 7px;
+  cursor: pointer;
+  border-left: 1px solid white;
+  border-top: 1px solid white;
+  border-right: 1px solid silver;
+  border-bottom: 1px solid silver;
+  border-radius: 5px 5px 0 0;
+}
+
+.ac-btn:hover {
+  background-color: white;
+}
+
+.ac-lbl {
+  background-color: #e0e0e4;
+  color: black;
+  margin-top: 3px;
+  padding: 2px 7px;
+  border-left: 2px solid white;
+  border-top: 2px solid white;
+  border-right: 2px solid silver;
+  border-radius: 5px 5px 0 0;
+}
+
+#ac-hh2,#ac-mm2,#ac-ss2 {
+  margin-left: 15px;
+}
+
 #ac-body {
   position: relative;  /* - позиционированный родитель */
   background-color: #e0e0e4;
@@ -32,7 +77,70 @@
 
 .ac-hand {
   position: absolute;
+  /*top: 0; left: 0;*/
   top: 50%;
   left: 50%;
   transform: translate(-50%,-50%);
+}
+
+#ac-time-in-words {
+  background-color: #e0e0e4;
+  padding: 3px;
+}
+
+#ac-hh2,#ac-mm2 {
+  margin-left: 15px;
+}
+
+#ac-alarm-face {
+  display: flex;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  padding: 9px;
+  background-color: black;
+  border-radius: 7px;
+}
+
+.ac-alarm-digit {
+  width: 32px;
+  height: 64px;
+}
+
+#ac-alarm-flag {
+  position: absolute;
+  z-index: 15;
+  width: 17px;
+  height: 17px;
+  margin-top: 10px;
+  right: 17px;
+  border: 1px solid black;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+#ac-alarm-flag.alarm-on {
+  /*border: 1px solid red;*/
+  border-radius: 7px;
+  background-color: red;
+}
+
+#ac-time-in-words-led {
+  background-color: black;
+  font-family: Arial Narrow,sans-serif;
+  /*  font-family: monospace;*/
+  color: lightgreen;
+  font-size: 18px;
+  padding-bottom: 5px;
+}
+
+#ac-pedestal {
+  padding: 2px 0;
+  font-size: 12px;
+  font-weight: bold;
+  text-align: center;
+  color: black;
+  background-color: #e0e0e4;
+  border-radius: 5px;
 }

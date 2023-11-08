@@ -1,7 +1,30 @@
 <!-- Analog Clock template -->
+<div class='ac-top-panel-wrapper'>
+  <div id='ac-controls'>
+    <div class='ac-buttons'>
+      <div id='ac-hh' class='ac-set-alarm-btn ac-btn'>Ч Ч</div>
+      <div id='ac-hh-lbl' class='ac-lbl'>часы</div>
+    </div>
+    <div>
+      <div id='ac-mode-btn' class='ac-btn' title='Переключение режима: Часы/Установка будильника'>режим</div><div id='ac-mode-lbl' class='ac-lbl'>ТЕКУЩЕЕ ВРЕМЯ</div>
+    </div>
+    <div class='ac-buttons'>
+      <div id='ac-m1' class='ac-set-alarm-btn ac-btn'>1 0</div><div id='ac-m2' class='ac-set-alarm-btn ac-btn'>0 1</div>
+      <div id='ac-mm-lbl' class='ac-lbl'>минуты</div>
+    </div>
+  </div>
+</div>
 <div id='ac-body' class='rect-3d'>
+  <div id='ac-alarm-flag' title='Вкл/выкл будильник'> </div>
+  <div id='ac-alarm-face' class='rect-3d-inset'>
+    <img id='ac-hh1' class='ac-alarm-digit' src='img/Digit-none.png'><img id='ac-hh2' class='ac-alarm-digit' src='img/Digit-none.png'>
+    <img id='ac-hh-mm-colon' class='ac-alarm-digit' src='img/Digit-colon.gif'>
+    <img id='ac-mm1' class='ac-alarm-digit' src='img/Digit-none.png'><img id='ac-mm2' class='ac-alarm-digit' src='img/Digit-none.png'>
+  </div>
   <canvas id='ac-face' width='400' height='400'></canvas>
   <canvas id='ac-hour-hand' class='ac-hand' width='400' height='400'></canvas>
   <canvas id='ac-minute-hand' class='ac-hand' width='400' height='400'></canvas>
   <canvas id='ac-second-hand' class='ac-hand' width='400' height='400'></canvas>
 </div>
+<div id='ac-time-in-words' class='rect-3d'><div id='ac-time-in-words-led'>время прописью</div></div>
+<div id='ac-pedestal' class='rect-3d'>LAGODROM&trade;</div>
