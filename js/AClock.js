@@ -3,6 +3,9 @@
   Абстрактный класс часов
   =========================
 */
+const
+  DIGIT_IMG_SRC='img/Digit-0.png';
+
 class AClock {
   tmpTime={h:-1,m:-1,s:0};  // хранит время будильника в процессе установки
 
@@ -11,7 +14,7 @@ class AClock {
   }
 
   /* Инициализация и переинициализация */
-  reinit() {
+  init() {
     this.updateButtons();
     this.updateAlarmFlag();
     this.updateClockFace();
@@ -40,9 +43,9 @@ class AClock {
 
   /* Отображение всех компонентов времени */
   displayTime(hms) {
-    this.displayHours(hms.h);
-    this.displayMinutes(hms.m);
-    this.displaySeconds(hms.s);
+    this.displayHours(hms);
+    this.displayMinutes(hms);
+    this.displaySeconds(hms);
   }
 
   /* Отображает время будильника */

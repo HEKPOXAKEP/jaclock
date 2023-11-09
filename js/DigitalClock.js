@@ -3,14 +3,12 @@
   Класс для отображения Цифровых часов
   =======================================
 */
-const
-  DIGIT_IMG_SRC='img/Digit-0.png';
-
 class DigitalClock extends AClock {
+  prevHMS={h:-1,m:-1,s:-1}  // предыдущее время
 
   constructor() {
     super();
-    this.reinit();
+    this.init();
   }
 
   /*
@@ -37,10 +35,15 @@ class DigitalClock extends AClock {
     Отображение часов
   */
   displayHours(hms) {
+    if (hms.h ==this.prevHMS.h) return;
+
     const
       hh=hms.h.toString(),
       hh1=document.getElementById('dc-hh1'),
       hh2=document.getElementById('dc-hh2');
+
+    if (app.clkMode =='cmClock')
+      this.prevHMS.h=hms.h;
 
     if (hh.length ===1) {
       hh1.setAttribute('src',DIGIT_IMG_SRC.replace('0','none'));
@@ -55,8 +58,13 @@ class DigitalClock extends AClock {
     Отображение минут
   */
   displayMinutes(hms) {
+    if (hms.m ==this.prevHMS.m) return;
+
     const
       mm=hms.m.toString().padStart(2,'0');
+
+    if (app.clkMode =='cmClock')
+      this.prevHMS.m=hms.m;
 
     document.getElementById('dc-mm1').setAttribute('src',DIGIT_IMG_SRC.replace('0',mm[0]));
     document.getElementById('dc-mm2').setAttribute('src',DIGIT_IMG_SRC.replace('0',mm[1]));
@@ -66,8 +74,13 @@ class DigitalClock extends AClock {
     Отображение секунд
   */
   displaySeconds(hms) {
+    if (hms.s ==this.prevHMS.s) return;
+
     const
       ss=hms.s.toString().padStart(2,'0');
+
+    if (app.clkMode =='cmClock')
+      this.prevHMS.s=hms.s;
 
     document.getElementById('dc-ss1').setAttribute('src',DIGIT_IMG_SRC.replace('0',ss[0]));
     document.getElementById('dc-ss2').setAttribute('src',DIGIT_IMG_SRC.replace('0',ss[1]));
@@ -77,7 +90,7 @@ class DigitalClock extends AClock {
     Отображает время прописью
   */
   displayTimeInWords(h,m) {
-    document.getElementById('dc-time-in-words-led').innerHTML=TimeSpeaker.time_in_words(h,m);
+    document.getElementById('dc-time-in-words-led').innerHTML=!h ? '&nbsp;' : TimeSpeaker.time_in_words(h,m);
   }
 
   /*
@@ -149,6 +162,7 @@ class DigitalClock extends AClock {
       const hms=time2HMS(new Date());
       this.displayHours(hms);
       this.displayMinutes(hms);
+      this.displayTimeInWords(hms.h,hms.m);
     } else { // app.clkMode==cmAlarm
       // режим установка будильника
       document.getElementById('dc-hh-mm-colon').setAttribute('src',DIGIT_IMG_SRC.replace('0','colon').replace('png','gif'));
@@ -156,6 +170,7 @@ class DigitalClock extends AClock {
       document.getElementById('dc-ss1').setAttribute('src',DIGIT_IMG_SRC.replace('0','none'));
       document.getElementById('dc-ss2').setAttribute('src',DIGIT_IMG_SRC.replace('0','none'));
       this.displayAlarmTime();
+      this.displayTimeInWords();
     }
   }
 

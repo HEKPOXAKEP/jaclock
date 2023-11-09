@@ -99,14 +99,14 @@ class Timer {
     if (hms.s ==this.curHMS.s)
       return;
     else
-      this.curHMS=hms;
+      this.curHMS.s=hms.s;
 
     if (!this.Visualizer) return;
 
     this.Visualizer.displaySeconds(hms);
+    this.displayCurrentHM(hms);
 
     if (hms.s ==0) {
-      this.displayCurrentHM(hms);
       // проверка будильника
       this.#app.checkAlarmTime(hms.h,hms.m);
     }
@@ -128,17 +128,15 @@ class Timer {
     if ((this.curHMS.h !=this.prevHMS.h) || (this.curHMS.m !=this.prevHMS.m))
       this.Visualizer.displayTimeInWords(this.curHMS.h,this.curHMS.m);
 
-    if (this.curHMS.h !==this.prevHMS.h) {
+    if (this.curHMS.h !==this.prevHMS.h)
       this.prevHMS.h=this.curHMS.h;
-      if (this.Visualizer)
-        this.Visualizer.displayHours(this.curHMS);
-    }
+    if (this.Visualizer)
+      this.Visualizer.displayHours(this.curHMS);
 
-    if (this.curHMS.m !==this.prevHMS.m) {
+    if (this.curHMS.m !==this.prevHMS.m)
       this.prevHMS.m=this.curHMS.m;
-      if (this.Visualizer)
-        this.Visualizer.displayMinutes(this.curHMS);
-    }
+    if (this.Visualizer)
+      this.Visualizer.displayMinutes(this.curHMS);
   }
 
   /*

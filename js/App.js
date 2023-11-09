@@ -84,7 +84,7 @@ class App
   versionInfo={};           // инфа о продукте, грузится из VersionInfo.json
   timer=null;               // объект таймера
   clkVisualObj=null;        // текущий объект визуализации в зависимости от this.clkType
-  clkMode='';               // текущий режим часов: cmClock || cmAlarm: часы || установка будильника
+  clkMode='';               // текущий режим часов: cmClock||cmAlarm: часы||установка будильника
   alarmOn=false;            // индикатор будильника
   alarmTime='00:00';        // время будильника
   bgPerc=0;                 // предыдущие проценты для фона
