@@ -4,6 +4,10 @@
   ===================
 */
 
+const
+  oauth_token='y0_AgAAAAAObVrtAATuwQAAAADx8ca8GoEOdx-GS1SV6jv_OCeakO4syE4';
+  catalog_id='';
+
 class TimeSpeaker {
   static
     HOURS=['ноль','один','два','три','четыре','пять','шесть',
@@ -19,7 +23,7 @@ class TimeSpeaker {
   /*
     Время прописью
   */
-  static time_in_words(h,m) {
+  static timeInWords(h, m) {
     var
       words='',
       ending_m=' минут',
