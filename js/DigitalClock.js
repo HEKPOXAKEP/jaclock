@@ -90,7 +90,7 @@ class DigitalClock extends AClock {
     Отображает время прописью
   */
   displayTimeInWords(h,m) {
-    document.getElementById('dc-time-in-words-led').innerHTML=!h ? '&nbsp;' : TimeSpeaker.time_in_words(h,m);
+    document.getElementById('dc-time-in-words-led').innerHTML=!h ? '&nbsp;' : TimeSpeaker.timeInWords(h,m);
   }
 
   /*

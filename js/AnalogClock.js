@@ -421,7 +421,7 @@ class AnalogClock extends AClock {
     Отображает время прописью
   */
   displayTimeInWords(h,m) {
-    document.getElementById('ac-time-in-words-led').innerHTML=!h ? '&nbsp;' : TimeSpeaker.time_in_words(h,m);
+    document.getElementById('ac-time-in-words-led').innerHTML=!h ? '&nbsp;' : TimeSpeaker.timeInWords(h,m);
   }
 
   /* -------------------------------------------------------- */

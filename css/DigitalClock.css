@@ -67,17 +67,23 @@
 }
 
 #dc-alarm-flag {
-  width: 15px;
-  height: 15px;
-  margin-left: 15px;
-  border: 1px solid silver;
-  border-radius: 7px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  margin-left: 24px;
+  background-color: #00ff00;
+  border-radius: 15px;
   cursor: pointer;
 }
 
+#dc-alarm-flag img {
+  width: 20px;
+  height: 20px;
+}
+
 #dc-alarm-flag.alarm-on {
-  border: 1px solid red;
-  border-radius: 7px;
   background-color: red;
 }
 

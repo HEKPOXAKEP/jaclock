@@ -58,7 +58,7 @@
   background-color: #f2f2f2;
   border: 3px solid silver;
   border-radius: 15px;
-/* установка размеров в css работает неправильно!
+/* для canvas установка размеров в css работает неправильно!
   width: 500px;
   height: 500px;*/
 }
@@ -77,7 +77,6 @@
 
 .ac-hand {
   position: absolute;
-  /*top: 0; left: 0;*/
   top: 50%;
   left: 50%;
   transform: translate(-50%,-50%);
@@ -109,21 +108,31 @@
 }
 
 #ac-alarm-flag {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   position: absolute;
   z-index: 15;
-  width: 17px;
-  height: 17px;
+  width: 32px;
+  height: 32px;
   margin-top: 10px;
   right: 17px;
-  border: 1px solid black;
-  border-radius: 8px;
+  border: 1px solid #808080;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 15px;
+  border-bottom-right-radius: 3px;
+  border-bottom-left-radius: 15px;
   cursor: pointer;
 }
 
+#ac-alarm-flag img {
+  width: 20px;
+  height: 20px;
+}
+
 #ac-alarm-flag.alarm-on {
-  /*border: 1px solid red;*/
-  border-radius: 7px;
-  background-color: red;
+  background-color: #f00;
+  border: 1px solid #f00;
 }
 
 #ac-time-in-words-led {
